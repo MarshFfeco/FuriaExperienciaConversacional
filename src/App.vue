@@ -17,6 +17,10 @@
         </Transition>
       </RouterView>
     </main>
+
+    <footer class="py-4  flex justify-center items-center">
+      <h4 class="text-base text-pretty text-highlighted">Feito Com &#9829; Por <ULink class="cursor-pointer" target="_blank" to="https://github.com/MarshFfeco">MarshFfeco</ULink></h4>
+    </footer>
   </Uapp>
 </template>
 

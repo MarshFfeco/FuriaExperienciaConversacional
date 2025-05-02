@@ -2,6 +2,7 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 import { ref } from 'vue';
 import { useColorMode } from '@vueuse/core'
+import router from '../router';
 
 const open = ref(false)
 const mode = useColorMode()
@@ -29,11 +30,25 @@ const items = ref<NavigationMenuItem[][]>([
 ])
 const itemsMenu = ref<NavigationMenuItem[]>([
     {
-      icon: 'iconamoon:home',
+      icon: 'iconamoon:home-bold',
       label: 'Dashboard',
-      class: "cursor-pointer",
-      onSelect: ChangeMenu
-    }
+      to: '/',
+      class: "cursor-pointer my-2 text-base",
+      onSelect: ChangeMenu,
+    },
+    {
+      icon: 'iconamoon:share-1',
+      label: 'Comunidade',
+      class: "cursor-pointer my-2 text-base",
+      onSelect: () => ToId("comunidade")
+    },
+    
+    {
+      icon: 'iconamoon:face-with-open-mouth-bold',
+      label: 'Sobre',
+      class: "cursor-pointer my-2 text-base",
+      onSelect: () => ToId("sobre")
+    },
   ],
 )
 
@@ -46,6 +61,12 @@ function ChangeMode()
 function ChangeMenu()
 {
   open.value = !open.value
+}
+
+function ToId(to: string)
+{
+  ChangeMenu()
+  router.push({hash: `#${to}`})
 }
 </script>
 
