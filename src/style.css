@@ -35,10 +35,7 @@
   --ui-bg-accented: var(--ui-color-neutral-200);
   --ui-bg-inverted: var(--ui-color-neutral-900);
 
-  --ui-border: var(--ui-color-neutral-200);
-  --ui-border-muted: var(--ui-color-primary-200);
-  --ui-border-accented: var(--ui-color-primary-300);
-  --ui-border-inverted: var(--ui-color-neutral-900);
+  --ui-border-primary: var(--ui-color-primary-500);
 }
 
 .dark {
@@ -55,13 +52,14 @@
   --ui-bg-accented: var(--ui-color-neutral-700);
   --ui-bg-inverted: var(--color-white);
 
-  --ui-border: var(--ui-color-neutral-800);
-  --ui-border-muted: var(--ui-color-primary-700);
-  --ui-border-accented: var(--ui-color-primary-700);
-  --ui-border-inverted: var(--color-white);
+  --ui-border-primary: var(--ui-color-primary-400);
 }
 
 .main {
-  padding-top: 57px;
-  min-height: calc(100vh);
+  padding-top: 76px;
+  min-height: calc(100vh - 76px);
+}
+
+.padding-top {
+  padding-top: calc(76px);
 }

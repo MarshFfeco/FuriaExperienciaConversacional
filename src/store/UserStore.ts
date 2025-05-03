@@ -1,35 +1,61 @@
 import { defineStore } from "pinia";
 import { useChatStore } from "./ChatStore";
-
-enum Rules {
-    FURIA_USER,
-    FURIA_ADM,
-    FURIA_PRO,
-}
+import { Rules } from "../enums/Rules";
+import { useCommentStore } from "./CommentStore";
 
 interface State {
     name: string,
-    rule: Rules
+    rule: Rules,
 }
 
 export const useUserStore = defineStore('user', {
     state: (): State => {
         return {
             name: '',
-            rule: Rules.FURIA_USER
+            rule: Rules.FURIA_USER,
+        }
+    },
+
+    getters: {
+        ICanAuthorization(state) {
+            const isAdm = state.rule == Rules.FURIA_ADM
+            const isPro = state.rule == Rules.FURIA_PRO
+ 
+            return isAdm || isPro
+        },
+
+        ICanDelete(state) {
+            return state.rule == Rules.FURIA_ADM
         }
     },
   
     actions: {
-        createChat(title: string, description: string)
+        async createChat(title: string, description: string)
+        {
+            const chatStore = useChatStore()
+            
+            await chatStore.addChat(this.name, title, description)
+        },
+
+        async removeChat(chatUid: string)
         {
             const chatStore = useChatStore()
 
-            const isAdm = this.rule == Rules.FURIA_ADM
-            const isPro = this.rule == Rules.FURIA_PRO
+            await chatStore.removeChat(chatUid)
+        },
 
-            if(isAdm || isPro)
-                chatStore.addChat(this.name, title, description)
+        async createComment(chatUid: string, comment: string)
+        {
+            const commentStore = useCommentStore()
+
+            await commentStore.addComment(chatUid, comment)
+        },
+
+        async removeComment(chatUid: string, commentUid: string)
+        {
+            const commentStore = useCommentStore()
+
+            await commentStore.deleteComment(chatUid, commentUid)
         }
     }
   })

@@ -4,15 +4,17 @@ import DashboardView from './views/DashboardView.vue'
 
 const routes = [
   { path: '/', component: DashboardView },
+  { path: '/chat/:uid' , component: () => import("./views/ChatView.vue") }
 ]
 
 const router = createRouter({
   history: createMemoryHistory(),
   routes,
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(to) {
     if (to.hash) {
       return {
         el: to.hash,
+        top: 76,
         behavior: 'smooth',
       }
     }

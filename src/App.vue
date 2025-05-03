@@ -1,39 +1,39 @@
 <script setup lang="ts">
-  import Navigation from './components/Navigation.vue';
-  import { useUserStore } from './store/UserStore';
+  import { ref } from 'vue';
 
-  const useUser = useUserStore()
-  useUser.name = 'Andersopn'
-  useUser.rule = 0
+  const openSearch = ref(false)
 
-  function CreateNewChat()
+  function ChangeSearch()
   {
-    useUser.createChat('Historical Tech Pioneers', 'ghopper: Relay malfunction found. Cause: moth.')
+    openSearch.value = !openSearch.value
   }
 </script>
 
 <template>
-  <Uapp>
-    <header class="fixed inset-x-0 backdrop-blur-sm">
-      <Navigation />
-    </header>
+  <UModal 
+    class="w-md"
+    v-model:open="openSearch" 
+    title="Receba Inteligência" 
+    description="Descubra o universo competitivo de Counter-Strike com a FURIA!">
 
-    <main>
-      <RouterView  v-slot="{ Component }" >
-        <Transition name="slide-up">
-          <div class="main">
-            <component :is="Component" />
-          </div>
-        </Transition>
-      </RouterView>
-    </main>
+    <template #body>
+      <ItemSearch v-on:select-chat="ChangeSearch" />
+    </template>
+  </UModal>
 
-    <UButton @click="CreateNewChat" size="xl">Criar Chat</UButton>
+  <header class="fixed inset-x-0 bg-default drop-shadow">
+    <Navigation v-on:open-search="ChangeSearch" />
+  </header>
 
-    <footer class="py-4  flex justify-center items-center">
-      <h4 class="text-base text-pretty text-highlighted">Feito Com &#9829; Por <ULink class="cursor-pointer" target="_blank" to="https://github.com/MarshFfeco">MarshFfeco</ULink></h4>
-    </footer>
-  </Uapp>
+  <main>
+    <UApp>
+      <RouterView />
+    </UApp>
+  </main>
+
+  <footer class="py-4 flex justify-center items-center">
+    <h4 class="text-base text-pretty text-highlighted">Feito Com &#9829; Por <ULink class="cursor-pointer" target="_blank" to="https://github.com/MarshFfeco">MarshFfeco</ULink></h4>
+  </footer>
 </template>
 
 

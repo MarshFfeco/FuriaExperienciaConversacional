@@ -1,44 +1,47 @@
 <script setup lang="ts">
-    const itemsBlog = [{
-            title: 'FURIA DOMINA E GARANTE VITÓRIA CONTRA [TIME ADVERSÁRIO]',
-            description: 'Em partida eletrizante, a equipe brasileira mostrou todo seu poder tático e individual para fechar a série [PLACAR]. Destaque para [JOGADOR] com [NÚMERO] kills.'
-        },
+    import { onBeforeMount, ref, type Ref } from 'vue';
+    import { useChatStore, type IChat } from '../store/ChatStore';
+    import LoadingComp from './LoadingComp.vue';
+
+    const chatStore = useChatStore()
+
+    const loading = ref(true)
+
+    const itemsBlog: Ref<IChat[]> = ref([])
+
+    onBeforeMount(async () => {
+        await chatStore.getChat()
+        console.log(chatStore.chats)
+        const limit = chatStore.chats.length > 4 ? 4 : chatStore.chats.length
+
+        for(let i = 0; i < limit; i++)
         {
-            title: "FURIA ENFRENTA [TIME] EM BUSCA DE VAGA PARA [CAMPEONATO]",
-            description: `O confronto acontece neste [DIA] e promete ser um dos mais acirrados do torneio. Analistas dão ligeira vantagem para os brasileiros, mas alertam: "Será uma guerra".`
-        },
-        {
-            title: "[NICK DO JOGADOR] É ELEITO MVP DO TORNEIO [NOME]",
-            description: `Com estatísticas impressionantes, o jogador da FURIA brilhou com [NÚMERO] de kills, [NÚMERO] ADR e [NÚMERO]% de HS. "É fruto de muito trabalho", declarou o astro."`
-        },
-        {
-            title: "FURIA ANUNCIA MUDANÇAS NO TIME DE CS:GO PARA 2024",
-            description: `A organização confirmou a saída de [JOGADOR] e a chegada de [NOVO JOGADOR]. O técnico [NOME] afirmou que as mudanças visam "manter o time no topo mundial".`
-        },
-        {
-            title: "[NICK DO JOGADOR] É ELEITO MVP DO TORNEIO [NOME]",
-            description: `Com estatísticas impressionantes, o jogador da FURIA brilhou com [NÚMERO] de kills, [NÚMERO] ADR e [NÚMERO]% de HS. "É fruto de muito trabalho", declarou o astro."`
-        },
-        {
-            title: "FURIA ANUNCIA MUDANÇAS NO TIME DE CS:GO PARA 2024",
-            description: `A organização confirmou a saída de [JOGADOR] e a chegada de [NOVO JOGADOR]. O técnico [NOME] afirmou que as mudanças visam "manter o time no topo mundial".`
+            itemsBlog.value[i] = chatStore.chats[i]
         }
-    ]
+
+        loading.value = false
+    })
 </script>
 
 <template>
-    <UContainer class="min-h-screen flex flex-col space-y-20 py-4 justify-center items-center">
+    <UContainer class="main flex flex-col space-y-20 py-4 justify-center items-center">
         <article class="text-center">
-            <small class="text-primary text-base text-pretty font-semibold">Bastidores e Curiosidades</small>
-            <h3 class="mt-2 text-highlighted lg:text-7xl text-5xl font-bold">Comunidade FURIA</h3>
-            <p class="mt-8 lg:text-lg text-base text-muted">
+            <small class="text-primary text-base text-pretty font-semibold">
+                Bastidores e Curiosidades
+            </small>
+
+            <h3 class="mt-2 text-highlighted md:text-5xl lg:text-7xl text-3xl font-bold">
+                Comunidade FURIA
+            </h3>
+
+            <p class="mt-6 lg:text-lg text-base text-muted">
                 Junte-se ao nosso grupo oficial e conecte-se com outros fãs da FURIA! <br>Compartilhe notícias, 
                 troque ideias e acompanhe tudo sobre o time em tempo real.
             </p>
         </article>
 
         <div class="w-full MyGrid" >
-            <article v-for="item in itemsBlog" 
+            <article v-if="!loading" v-for="item in itemsBlog" 
                 class="border border-default hover:border-accented rounded-lg p-4 space-y-1">
                 
                 <h3 class="truncate text-base text-highlighted font-bold">
@@ -51,6 +54,8 @@
 
                 <UButton class="cursor-pointer mt-4" color="primary" size="xl" icon="iconamoon:do-redo-fill">Acessar</UButton>
             </article>
+
+            <LoadingComp class="my" v-else />
         </div>
     </UContainer>
 </template>
@@ -59,8 +64,14 @@
     .MyGrid {
         display: grid;
 
-        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+
+        justify-content: center;
 
         gap: 16px;
+    }
+
+    .my {
+        grid-column: span 8;
     }
 </style>
