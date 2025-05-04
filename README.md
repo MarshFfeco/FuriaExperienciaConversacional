@@ -1,9 +1,60 @@
-# Vue 3 + TypeScript + Vite
+# Challenger #1: Experiência Conversacional
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Desenvolver um caso de uso conversacional relacionado à FURIA (Telegram, web chat ou mobile chat)
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+![Logo](./github/furia_img.png)
+
+## Stack utilizada
+
+**Front-end:** Vue, NuxtUi, TailwindCSS
+
+**Back-end:** Firebase
+
+## Passo-a-Passo
+
+### 1 - Clonar o Repositório
+
+```bash
+git clone https://github.com/MarshFfeco/FuriaExperienciaConversacional.git
+cd nome-projeto
+```
+
+### 2 - Instalar Dependências
+
+```bash
+# Usando npm
+npm install
+
+# Ou usando yarn
+yarn install
+```
+
+### 3 - Configurar Variáveis de Ambiente
+
+#### 3.1 - Criar um projeto no firebase
+
+![Firebase](./github/f1.jpeg)
+
+#### 3.3 - Acesse as configurações do projeto
+
+![Firebase](./github/f2.jpeg)
+
+#### 3.4 - Pegue as informações na variável `firebaseConfig` e coloque no arquivo .env
+
+![Firebase](./github/f3.jpeg)
+
+### 4 - Executar o Projeto
+
+```bash
+npm run dev
+```
+
+## Screenshots
+
+![Comunidade](./github/menu.jpeg)
+![Sobre](./github/comunity.jpeg)
+![Menu](./github/about.jpeg)
 
 ## Versão
 
-2.0.0
+4.0.0
