@@ -2,6 +2,7 @@
     import { onBeforeMount, ref, type Ref } from 'vue';
     import { useChatStore, type IChat } from '../store/ChatStore';
     import LoadingComp from './LoadingComp.vue';
+import router from '../router';
 
     const chatStore = useChatStore()
 
@@ -21,6 +22,11 @@
 
         loading.value = false
     })
+
+    function Acessar(chatUid: string)
+    {
+        router.push("/chat/" + chatUid)
+    }
 </script>
 
 <template>
@@ -52,7 +58,7 @@
                     {{ item.description }}
                 </p>
 
-                <UButton class="cursor-pointer mt-4" color="primary" size="xl" icon="iconamoon:do-redo-fill">Acessar</UButton>
+                <UButton @click="Acessar(item.chatUid)" class="cursor-pointer mt-4" color="primary" size="xl" icon="iconamoon:do-redo-fill">Acessar</UButton>
             </article>
 
             <LoadingComp class="my" v-else />
